@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Agenda">
+    <meta name="author" content="e-ghost 2019">
+
+    <title>AgendaVue</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Open Graph for Facebook -->
+    <meta property="og:title" content="AgendaVue - Agenda básica en Vue">
+    <meta property="og:description" content="Una agenda simple para gestionar contactos usando Vue.js.">
+    <meta property="og:image" content="img/portfolio/cabin.png"> <!-- Reemplaza con URL real de imagen -->
+    <meta property="og:url" content="https://example.com/agendaVue"> <!-- Reemplaza con URL real -->
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AgendaVue - Agenda básica en Vue">
+    <meta name="twitter:description" content="Una agenda simple para gestionar contactos usando Vue.js.">
+    <meta name="twitter:image" content="img/portfolio/circus.png"> <!-- Reemplaza con URL real de imagen -->
+</head>
+<!-- ...existing code... -->
+
+<body id="page-top" class="index">
+<div id="app">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Cambiar navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">AgendaVue</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contactos">Contactos</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#nuevo">Añadir contacto</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">Acerca de...</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">AgendaVue</span>
+                        <hr class="star-light">
+                        <span class="skills">Agenda básica en Vue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contactos Grid Section -->
+    <section id="contactos">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Contactos</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+
+            <!-- Cabecera columnas -->
+            <div class="row">
+                <div class="col-xs-4"><h4>Nombre</h4></div>
+                <div class="col-xs-4"><h4>Email</h4></div>
+                <div class="col-xs-3"><h4>Teléfono</h4></div>
+                <div class="col-xs-1"><h4></h4></div>
+            </div>
+
+            <!-- Lista de contactos (microdata + RDFa) -->
+            <div v-if="contacts.length">
+                <div class="row" v-for="(c, idx) in contacts" :key="idx" style="margin-bottom:8px;"
+                     itemscope itemtype="http://schema.org/Person" vocab="http://schema.org/" typeof="schema:Person">
+                    <div class="col-xs-4">
+                        <p itemprop="name" property="schema:name">{{ c.name }}</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <p itemprop="email" property="schema:email">{{ c.email }}</p>
+                    </div>
+                    <div class="col-xs-3">
+                        <p itemprop="telephone" property="schema:telephone">{{ c.phone }}</p>
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="btn btn-danger btn-sm" @click="removeContact(c)" title="Borrar">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button class="btn btn-primary btn-sm" @click="shareOnFacebook(c)" title="Compartir en Facebook">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                        <button class="btn btn-info btn-sm" @click="shareOnTwitter(c)" title="Compartir en Twitter">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensaje si no hay contactos -->
+            <div v-else>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>No se ha encontrado ningún contacto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Añadir nuevo Section -->
+    <section id="nuevo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Añadir contacto</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <form id="contactForm" @submit.prevent="addContact" novalidate itemscope itemtype="http://schema.org/Person">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" placeholder="Nombre" v-model="newContact.name" required itemprop="name">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="Email" v-model="newContact.email" required itemprop="email">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Teléfono</label>
+                                <input type="tel" class="form-control" placeholder="Número de teléfono" v-model="newContact.phone" itemprop="telephone">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Acerca de...</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>AgendaVue es un proyecto simple en VueJS.</p>
+                </div>
+            </div>
+            <!-- Botones de compartir generales, información general de la página. -->
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <button class="btn btn-facebook btn-sm" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https://example.com/agendaVue', '_blank', 'width=600,height=400')" title="Compartir en Facebook">
+                        <i class="fa fa-facebook"></i> Compartir en Facebook
+                    </button>
+                    <button class="btn btn-twitter btn-sm" onclick="window.open('https://twitter.com/intent/tweet?text=AgendaVue%20-%20Agenda%20básica%20en%20Vue&url=https://example.com/agendaVue', '_blank', 'width=600,height=400')" title="Compartir en Twitter">
+                        <i class="fa fa-twitter"></i> Compartir en Twitter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyleft &copy; e-ghost 2019
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+<div class="scroll-top page-scroll visible-xs visible-sm">
+    <a class="btn btn-primary" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+</div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/freelancer.js"></script>
+    
+    <!-- Vue -->
+    <script src="js/vue.js"></script>   
+
+    <!-- VueFire + Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="https://unpkg.com/vuefire@1.4.5/dist/vuefire.js"></script>
+
+    <!-- App JS: implementa la SPA -->
+    <script src="js/app.js"></script>
+
+    <!-- JSON-LD placeholder -->
+    <script id="jsonld" type="application/ld+json"></script>
+
+</body>
+</html>
