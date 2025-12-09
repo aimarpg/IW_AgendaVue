@@ -94,7 +94,7 @@ new Vue({
         const title = `Contacto: ${contact.name}`;
         const description = `Email: ${contact.email}, Teléfono: ${contact.phone}`;
         const image = 'img/portfolio/contact.jpg';
-        const url = 'https://example.com/agendaVue';
+        const url = 'https://iwagendavue.netlify.app';
 
         this.updateMetaTags(title, description, image, url);
 
@@ -106,8 +106,8 @@ new Vue({
     shareOnTwitter(contact) {
         const title = `Contacto: ${contact.name}`;
         const description = `Email: ${contact.email}, Teléfono: ${contact.phone}`;
-        const image = 'img/portfolio/contact.jpg'; // Reemplaza con URL real
-        const url = 'https://example.com/agendaVue';
+        const image = 'img/portfolio/contact.jpg';
+        const url = 'https://iwagendavue.netlify.app';
 
         this.updateMetaTags(title, description, image, url);
 
