@@ -1,5 +1,6 @@
-AgendaVue 
-Ingeniería Web - 2025
+## **AgendaVue**
+### Ingeniería Web - 2025
+
 En este repositorio se ha realizado la segunda parte de la entrega final del proyecto colaborativo de la asignatura de Ingeniería Web. Esta tarea tenía la descripción a continuación: Desarrollar una SPA con Vue para una agenda de contactos con las siguientes funcionalidades: a)  Mostrar contactos (nombre, email, teléfono); b) Crear nuevo contacto; c) Borrar contacto. 
 Para el desarrollo de esta tarea se han llevado a cabo los próximos puntos:
 - Desarrollar la SPA con Vue y desplegarla en Netlify. Este es el enlace de la página web desplegada en Netlify: https://iwagendavue.netlify.app.
